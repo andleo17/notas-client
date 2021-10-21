@@ -21,10 +21,8 @@ function Sidebar() {
 		<div id='sidebar'>
 			<h1 className='sidebar__brand'>Notas USAT</h1>
 			<nav className='sidebar__menu'>
-				{routes.map((r) => (
-					<div className='sidebar__menu-button'>
-						<Link {...r} />
-					</div>
+				{routes.map((r, i) => (
+					<Link {...r} className='sidebar__menu-button' key={i} />
 				))}
 			</nav>
 			<div className='sidebar__user'>
@@ -33,17 +31,19 @@ function Sidebar() {
 					src={userPhotoPlaceholder}
 					alt='User'
 				/>
-				<div className='sidebar__user-name'>
-					<span>{user?.name}</span>
-					<span>{user?.lastname}</span>
+				<div className='sidebar__user-info'>
+					<div className='sidebar__user-name'>
+						<span>{user?.name} </span>
+						<span>{user?.lastname}</span>
+					</div>
+					<div className='sidebar__user-school'>
+						<span>{user?.curriculum?.school.name}</span>
+					</div>
 				</div>
-				<div className='sidebar__user-school'>
-					<span>{user?.curriculum?.school.name}</span>
-				</div>
-				<button type='button' onClick={logout}>
-					Cerrar sesión
-				</button>
 			</div>
+			<button type='button' onClick={logout}>
+				Cerrar sesión
+			</button>
 		</div>
 	);
 }

@@ -2,3 +2,29 @@
 	height: inherit;
 	background-color: $primary;
 }
+
+.sidebar__brand {
+	padding: 2em 0.5em;
+}
+
+.sidebar__menu-button {
+	display: block;
+	text-decoration: none;
+	color: white;
+	padding: 15px;
+}
+
+.sidebar__user {
+	display: flex;
+	align-items: center;
+}
+
+.sidebar__user-photo {
+	height: 30px;
+	width: 30px;
+	border-radius: 50%;
+}
+
+.sidebar__user-info {
+	font-size: 11px;
+}
