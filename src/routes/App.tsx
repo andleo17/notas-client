@@ -1,9 +1,11 @@
 import { useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Sidebar from '../components/Sidebar';
 import { useMeQuery } from '../generated/graphql';
 import { useAuth } from '../hooks/AuthContext';
 import Home from '../pages/Home';
-import Login from '../pages/Login';
+import Auth from '../pages/Auth';
+import NotFound from '../pages/NotFound';
 import ProtectedRoute from './ProtectedRoute';
 
 function App() {
@@ -20,12 +22,13 @@ function App() {
 	return (
 		<Router>
 			<Switch>
-				<Route path='/login'>
-					<Login />
+				<Route exact path='/login'>
+					<Auth />
 				</Route>
-				<ProtectedRoute path='/'>
+				<ProtectedRoute exact path='/'>
 					<Home />
 				</ProtectedRoute>
+				<NotFound />
 			</Switch>
 		</Router>
 	);

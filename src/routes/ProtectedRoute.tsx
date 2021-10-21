@@ -1,4 +1,5 @@
 import { Redirect, Route, RouteProps } from 'react-router';
+import Sidebar from '../components/Sidebar';
 import { useAuth } from '../hooks/AuthContext';
 
 function ProtectedRoute({
@@ -11,7 +12,10 @@ function ProtectedRoute({
 			{...props}
 			render={({ location }) =>
 				!!user ? (
-					children
+					<div id='app'>
+						<Sidebar />
+						{children}
+					</div>
 				) : (
 					<Redirect
 						to={{

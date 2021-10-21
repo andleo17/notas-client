@@ -1,0 +1,11 @@
+fragment UserInfo on User {
+	id
+	name
+	lastname
+	curriculumId
+	curriculum {
+		school {
+			name
+		}
+	}
+}

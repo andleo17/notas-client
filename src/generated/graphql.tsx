@@ -132,7 +132,7 @@ export type Query = {
   group?: Maybe<Group>;
   groups: Array<Group>;
   login: AuthPayload;
-  me: User;
+  me?: Maybe<User>;
   representativeGroup?: Maybe<RepresentativeGroup>;
   representativeGroups: Array<RepresentativeGroup>;
   schedules: Array<Schedule>;
@@ -400,12 +400,12 @@ export type LoginQueryVariables = Exact<{
 }>;
 
 
-export type LoginQuery = { __typename?: 'Query', login: { __typename?: 'AuthPayload', token: string, user: { __typename?: 'User', name: string, lastname: string } } };
+export type LoginQuery = { __typename?: 'Query', login: { __typename?: 'AuthPayload', token: string, user: { __typename?: 'User', id: string, name: string, lastname: string, curriculumId: number, curriculum: { __typename?: 'Curriculum', school: { __typename?: 'School', name: string } } } } };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename?: 'Query', me: { __typename?: 'User', lastname: string, name: string } };
+export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, name: string, lastname: string, curriculumId: number, curriculum: { __typename?: 'Curriculum', school: { __typename?: 'School', name: string } } } | null | undefined };
 
 export type SignUpMutationVariables = Exact<{
   username: Scalars['String'];
@@ -413,20 +413,33 @@ export type SignUpMutationVariables = Exact<{
 }>;
 
 
-export type SignUpMutation = { __typename?: 'Mutation', signup: { __typename?: 'AuthPayload', token: string, user: { __typename?: 'User', name: string, lastname: string } } };
+export type SignUpMutation = { __typename?: 'Mutation', signup: { __typename?: 'AuthPayload', token: string, user: { __typename?: 'User', id: string, name: string, lastname: string, curriculumId: number, curriculum: { __typename?: 'Curriculum', school: { __typename?: 'School', name: string } } } } };
 
+export type UserInfoFragment = { __typename?: 'User', id: string, name: string, lastname: string, curriculumId: number, curriculum: { __typename?: 'Curriculum', school: { __typename?: 'School', name: string } } };
 
+export const UserInfoFragmentDoc = gql`
+    fragment UserInfo on User {
+  id
+  name
+  lastname
+  curriculumId
+  curriculum {
+    school {
+      name
+    }
+  }
+}
+    `;
 export const LoginDocument = gql`
     query Login($nickname: String!, $password: String!) {
   login(nickname: $nickname, password: $password) {
     token
     user {
-      name
-      lastname
+      ...UserInfo
     }
   }
 }
-    `;
+    ${UserInfoFragmentDoc}`;
 
 /**
  * __useLoginQuery__
@@ -459,11 +472,10 @@ export type LoginQueryResult = Apollo.QueryResult<LoginQuery, LoginQueryVariable
 export const MeDocument = gql`
     query Me {
   me {
-    lastname
-    name
+    ...UserInfo
   }
 }
-    `;
+    ${UserInfoFragmentDoc}`;
 
 /**
  * __useMeQuery__
@@ -496,12 +508,11 @@ export const SignUpDocument = gql`
   signup(username: $username, password: $password) {
     token
     user {
-      name
-      lastname
+      ...UserInfo
     }
   }
 }
-    `;
+    ${UserInfoFragmentDoc}`;
 export type SignUpMutationFn = Apollo.MutationFunction<SignUpMutation, SignUpMutationVariables>;
 
 /**

@@ -2,8 +2,7 @@ query Login($nickname: String!, $password: String!) {
 	login(nickname: $nickname, password: $password) {
 		token
 		user {
-			name
-			lastname
+			...UserInfo
 		}
 	}
 }

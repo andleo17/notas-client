@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './styles/index.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import './sass/main.scss';
 import App from './routes/App';
 import {
 	ApolloClient,

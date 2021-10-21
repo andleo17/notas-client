@@ -1,13 +1,15 @@
 import React, { createContext, useContext, useState } from 'react';
-import { User } from '../generated/graphql';
+import { UserInfoFragment } from '../generated/graphql';
 
 type AuthProviderState = {
-	user: Partial<User> | null;
-	setUser: React.Dispatch<React.SetStateAction<Partial<User> | null>>;
+	user?: UserInfoFragment | null;
+	setUser: React.Dispatch<
+		React.SetStateAction<UserInfoFragment | undefined | null>
+	>;
 };
 
 const initialState: AuthProviderState = {
-	user: null,
+	user: undefined,
 	setUser: () => {},
 };
 
@@ -20,7 +22,9 @@ export const useAuth = () => {
 type AuthProviderProps = { children: React.ReactNode };
 
 export function AuthProvider({ children }: AuthProviderProps) {
-	const [user, setUser] = useState<Partial<User> | null>(null);
+	const [user, setUser] = useState<UserInfoFragment | undefined | null>(
+		undefined
+	);
 
 	return (
 		<AuthContext.Provider value={{ user, setUser }}>
