@@ -30,7 +30,7 @@
 		"@vitejs/plugin-react": "^1.0.5",
 		"sass": "^1.43.2",
 		"typescript": "^4.4.4",
-		"vite": "^2.6.10"
+		"vite": "^2.9.13"
 	},
 	"main": "index.js",
 	"keywords": [],
